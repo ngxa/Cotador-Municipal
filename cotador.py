@@ -13,14 +13,14 @@ if "visibility" not in st.session_state:
 # Página Inicial
 def home_page():
     # Carregar e exibir uma imagem local
-    image = Image.open('C:/Streamlit/Ativo-1Logo-1.png')
+    image = Image.open('Ativo-1Logo-1.png')
     st.image(image)
     st.write("Cotador de precipitação de nível municipal")
 
 # Página 2
 def page_2():
     st.title("Cotador")
-    file = 'C:/Users/naguiar/OneDrive - Hyperion Insurance Group/Automatização/Excel_Webapp/MUNICIPAL_AON - calculator.xlsx'
+    file = 'MUNICIPAL_AON - calculator.xlsx'
     df = pd.read_excel(file, sheet_name = 'Sheet1', usecols= 'A:U', header = 0)
     dia_atual = dt.datetime.today()
 
