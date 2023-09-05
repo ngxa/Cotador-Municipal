@@ -3,6 +3,8 @@ import pandas as pd
 import io
 import datetime as dt 
 from PIL import Image
+import openpyxl
+
 
 # Store the initial value of widgets in session state
 if "visibility" not in st.session_state:
@@ -20,8 +22,8 @@ def home_page():
 # Página 2
 def page_2():
     st.title("Cotador")
-    file = 'MUNICIPAL_AON - calculator.xlsx'
-    df = pd.read_excel(file)
+    file = 'MUNICIPAL_AON - calculator.csv'
+    df = pd.read_csv(file)
     dia_atual = dt.datetime.today()
 
     df[['inicio1', 'fim1']] = df['Risk_period 1'].str.split(' / ', n=1, expand=True)
@@ -156,7 +158,7 @@ def page_2():
             key='download_excel_button',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-
+set.set_page_config(page_title = "Cotador Municipal")
 # Configurar o estado da sessão
 if 'page' not in st.session_state:
     st.set_page_config(page_title="Kovr Cotador", page_icon="C:/Streamlit/transferir.png")
