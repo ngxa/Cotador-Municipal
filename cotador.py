@@ -21,7 +21,7 @@ def home_page():
 def page_2():
     st.title("Cotador")
     file = 'MUNICIPAL_AON - calculator.xlsx'
-    df = pd.read_excel(file, sheet_name = 'Sheet1', usecols= 'A:U', header = 0)
+    df = pd.read_excel(file)
     dia_atual = dt.datetime.today()
 
     df[['inicio1', 'fim1']] = df['Risk_period 1'].str.split(' / ', n=1, expand=True)
