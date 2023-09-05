@@ -158,7 +158,7 @@ def page_2():
             key='download_excel_button',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-set.set_page_config(page_title = "Cotador Municipal")
+st.set_page_config(page_title = "Cotador Municipal")
 # Configurar o estado da sessão
 if 'page' not in st.session_state:
     st.set_page_config(page_title="Kovr Cotador", page_icon="C:/Streamlit/transferir.png")
