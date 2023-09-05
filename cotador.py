@@ -3,7 +3,8 @@ import pandas as pd
 import io
 import datetime as dt 
 from PIL import Image
-
+from openpyxl import Workbook
+from io import BytesIO
 
 
 # Store the initial value of widgets in session state
@@ -24,7 +25,7 @@ def page_2():
     st.title("Cotador")
     file = 'MUNICIPAL_AON - calculator.csv'
     df = pd.read_csv(file, sep=';')
-    st.dataframe(df)
+    
     dia_atual = dt.datetime.today()
 
     df[['inicio1', 'fim1']] = df['Risk_period 1'].str.split(' / ', n=1, expand=True)
@@ -142,22 +143,30 @@ def page_2():
         st.dataframe(resultado)
 
         
-        def convert_df_to_excel(df):
-            # IMPORTANT: Cache the conversion to prevent computation on every rerun
-            excel_buffer = io.BytesIO()
-            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-                df.to_excel(writer, index=False, sheet_name='Sheet1')
+        # Função para salvar o DataFrame em um arquivo Excel
+        def save_dataframe_to_excel(df, file_name):
+            workbook = Workbook()
+            sheet = workbook.active
+
+            # Adicione os dados do DataFrame ao arquivo Excel
+            for row in df.iterrows():
+                sheet.append(row[1].tolist())
+
+            # Salve o arquivo Excel em memória
+            excel_buffer = BytesIO()
+            workbook.save(excel_buffer)
             excel_buffer.seek(0)
-            return excel_buffer.read()
 
-        excel_data = convert_df_to_excel(resultado)
+            # Crie um link de download para o arquivo Excel
+            st.download_button(
+                "Download Excel",
+                data=excel_buffer,
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key=file_name
+            )
 
-        st.download_button(
-            label="Download Excel",
-            data=excel_data,
-            file_name='cotacao_'+ dia_atual.strftime('%Y%m%d')+'.xlsx',
-            key='download_excel_button',
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        # Use a função para salvar o DataFrame
+        save_dataframe_to_excel(resultado, "cotador_" + dia_atual.strftime('%Y%m%d')+".xlsx")
 
 st.set_page_config(page_title = "Cotador Municipal")
 # Configurar o estado da sessão
