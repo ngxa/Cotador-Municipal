@@ -24,6 +24,7 @@ def page_2():
     st.title("Cotador")
     file = 'MUNICIPAL_AON - calculator.csv'
     df = pd.read_csv(file, sep=';')
+    st.dataframe(df)
     dia_atual = dt.datetime.today()
 
     df[['inicio1', 'fim1']] = df['Risk_period 1'].str.split(' / ', n=1, expand=True)
@@ -87,16 +88,16 @@ def page_2():
         for c, p1, p2, a, v in zip(cidades_selecionadas, periodo1, periodo2, area, valor):
             result = df[df['Município'] == c]
              
-            taxa = result['Gross Rol [%]'].values[0]
+            taxa = result.iloc[:, 4].values[0]
             lmi = a * v
             preco = taxa * lmi
             if p1 == True:
                 saida1 = result['Exit 1'].values[0]
-                strike1 = result['Strike 1'].values[0]
+                strike1 = result.iloc[:, 8].values[0]
                 ind_max1 = lmi/2
                 paid_mm1 = ind_max1/strike1
                 CIDADE.append(c)
-                TAXA.append(round(taxa, 2))
+                TAXA.append(taxa * 100)
                 PERIODO.append(result['Risk_period 1'].values[0])
                 AREA.append(a)
                 VALOR.append(v)
@@ -114,7 +115,7 @@ def page_2():
                 ind_max2 = lmi/2
                 paid_mm2 = ind_max2/strike2
                 CIDADE.append(c)
-                TAXA.append(round(taxa, 2))
+                TAXA.append(taxa * 100)
                 PERIODO.append(result['Risk_period 2'].values[0])
                 AREA.append(a)
                 VALOR.append(v)
