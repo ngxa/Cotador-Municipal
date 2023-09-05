@@ -161,7 +161,6 @@ def page_2():
 st.set_page_config(page_title = "Cotador Municipal")
 # Configurar o estado da sessão
 if 'page' not in st.session_state:
-    st.set_page_config(page_title="Kovr Cotador", page_icon="C:/Streamlit/transferir.png")
     st.session_state.page = "Página Inicial"
 
 # Criar um menu de navegação
