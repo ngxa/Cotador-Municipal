@@ -23,7 +23,7 @@ def home_page():
 def page_2():
     st.title("Cotador")
     file = 'MUNICIPAL_AON - calculator.csv'
-    df = pd.read_csv(file)
+    df = pd.read_csv(file, sep=';')
     dia_atual = dt.datetime.today()
 
     df[['inicio1', 'fim1']] = df['Risk_period 1'].str.split(' / ', n=1, expand=True)
