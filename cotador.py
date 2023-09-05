@@ -3,7 +3,7 @@ import pandas as pd
 import io
 import datetime as dt 
 from PIL import Image
-import openpyxl
+
 
 
 # Store the initial value of widgets in session state
